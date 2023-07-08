@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { getArticle } from "../articles";
-import { useRef, useEffect } from "react";
 import parse from "html-react-parser";
+import { Card, Text } from "@shopify/polaris";
 
 export async function loader({ params }) {
     const article = await getArticle(params._id);
@@ -9,21 +9,17 @@ export async function loader({ params }) {
 }
 
 export default function Article() {
-    // const myRef = useRef(null);
-    // useEffect(() => {
-    //     myRef.current.innerHTML =
-    //         article?.article?.body_html || "<p>loading</p>";
-    // }, [myRef]);
-
     const { article } = useLoaderData();
-    console.log(article);
+    console.log(parse(article?.article?.body_html));
 
     // return <div ref={myRef} />;
     return (
         <>
-            <div>{parse(article?.article?.title)}</div>
-            <div>{parse(article?.article?.subtitle)}</div>
-            <div>{parse(article?.article?.body_html)}</div>
+            <Card>
+                <div>{parse(article?.article?.title)}</div>
+                <div>{parse(article?.article?.subtitle)}</div>
+                <div>{parse(article?.article?.body_html)}</div>
+            </Card>
         </>
     );
 }
