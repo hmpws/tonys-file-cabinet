@@ -1,14 +1,20 @@
-import { Page, LegacyCard, Button } from "@shopify/polaris";
+import { Outlet } from "react-router-dom";
+import { Page, Layout } from "@shopify/polaris";
+import { AutocompleteExample } from "../components/AutocompleteExample";
+import { BaseListboxExample } from "../components/BaseListboxExample";
+
 export default function Root() {
     return (
-        <>
-            <Page title="Example app">
-                <LegacyCard sectioned>
-                    <Button onClick={() => alert("Button clicked!")}>
-                        Example button
-                    </Button>
-                </LegacyCard>
-            </Page>
-        </>
+        <Page>
+            <Layout>
+                <Layout.Section secondary>
+                    <AutocompleteExample />
+                    <BaseListboxExample />
+                </Layout.Section>
+                <Layout.Section>
+                    <Outlet />
+                </Layout.Section>
+            </Layout>
+        </Page>
     );
 }
