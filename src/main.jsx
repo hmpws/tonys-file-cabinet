@@ -4,14 +4,23 @@ import "@shopify/polaris/build/esm/styles.css";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./routes/root";
+import Root, { loader as rootLoader } from "./routes/root";
 import Index from "./routes/index";
+import Article, { loader as articleLoader } from "./routes/article";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
-        children: [{ index: true, element: <Index /> }],
+        loader: rootLoader,
+        children: [
+            { index: true, element: <Index /> },
+            {
+                path: "article/:_id",
+                element: <Article />,
+                loader: articleLoader,
+            },
+        ],
     },
 ]);
 
