@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { getArticle } from "../articles";
 import parse from "html-react-parser";
-import { Card, Text } from "@shopify/polaris";
+import { Card } from "@shopify/polaris";
 
 export async function loader({ params }) {
     const article = await getArticle(params._id);
@@ -12,7 +12,6 @@ export default function Article() {
     const { article } = useLoaderData();
     console.log(parse(article?.article?.body_html));
 
-    // return <div ref={myRef} />;
     return (
         <>
             <Card>

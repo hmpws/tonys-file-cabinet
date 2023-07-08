@@ -1,7 +1,7 @@
--   [ ] layout (use react-router-dom as example)
--   [ ] talk to db
+-   [x] layout (use react-router-dom as example)
+-   [x] talk to db
 -   [ ] search box
--   [ ] table
--   [ ] display article
+-   [x] table
+-   [x] display article
 -   [ ] deploy to pages
--   [ ] page title not changing?
+-   [ ] page title
