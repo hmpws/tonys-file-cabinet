@@ -5,11 +5,11 @@ import { useState, useCallback, useMemo } from "react";
 export function AutocompleteExample() {
     const deselectedOptions = useMemo(
         () => [
-            { value: "rustic", label: "Rustic" },
-            { value: "antique", label: "Antique" },
-            { value: "vinyl", label: "Vinyl" },
-            { value: "vintage", label: "Vintage" },
-            { value: "refurbished", label: "Refurbished" },
+            // { value: "rustic", label: "Rustic" },
+            // { value: "antique", label: "Antique" },
+            // { value: "vinyl", label: "Vinyl" },
+            // { value: "vintage", label: "Vintage" },
+            // { value: "refurbished", label: "Refurbished" },
         ],
         []
     );
@@ -61,7 +61,7 @@ export function AutocompleteExample() {
     );
 
     return (
-        <div style={{ "padding-bottom": "10px" }}>
+        <div style={{ padding: "10px" }}>
             <Autocomplete
                 options={options}
                 selected={selectedOptions}
