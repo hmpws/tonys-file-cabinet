@@ -38,6 +38,14 @@ export const getArticles = async (site, blog) => {
         };
 
         const data = await collection.find({ type: "ARTICLE" }, query);
+
+        const date =
+            site === "substack"
+                ? "article.article.post_date"
+                : "article.article.attributes.publishOn";
+
+        data.sort((objA, objB) => Number(objB[date]) - Number(objA[date]));
+
         return data;
     }
 };

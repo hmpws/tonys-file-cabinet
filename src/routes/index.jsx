@@ -5,15 +5,14 @@ import {
     FormLayout,
     Button,
 } from "@shopify/polaris";
-import { Form, Link, redirect } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { checkLogin, loginApiKey } from "../articles";
 
 export async function action({ request, params }) {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     const user = await loginApiKey(data.apiKey);
-    console.log(user);
-    return redirect("/");
+    return window.location.reload();
 }
 
 export default function Index() {

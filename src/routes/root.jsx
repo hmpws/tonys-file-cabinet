@@ -4,10 +4,11 @@ import {
     Outlet,
     useLoaderData,
     useSearchParams,
+    useNavigation,
 } from "react-router-dom";
 import { Page } from "@shopify/polaris";
 import { AutocompleteExample } from "../components/AutocompleteExample";
-import { Frame, Navigation } from "@shopify/polaris";
+import { Frame, Navigation, Loading } from "@shopify/polaris";
 import { getArticles, loginAnonymous } from "../articles";
 import { useEffect, useState } from "react";
 
@@ -26,6 +27,7 @@ export default function Root() {
     const { articles } = useLoaderData();
     const [searchParams] = useSearchParams();
     const site = searchParams.get("s");
+    const navigate = useNavigation();
 
     const [searchVal, setSearchVal] = useState("");
 
@@ -37,7 +39,10 @@ export default function Root() {
             title = article.article.attributes.title;
         }
 
-        return title.match(new RegExp(`${searchVal}`, "i"));
+        return (
+            searchVal.length === 0 ||
+            title.match(new RegExp(`${searchVal}`, "i"))
+        );
     });
 
     const getNavlinks = (site, article) => {
@@ -110,6 +115,7 @@ export default function Root() {
     return (
         <>
             <Frame navigation={navigationComponent}>
+                {navigate.state === "loading" ? <Loading /> : null}
                 <Outlet />
             </Frame>
         </>

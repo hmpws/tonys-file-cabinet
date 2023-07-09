@@ -20,6 +20,9 @@ export function AutocompleteExample({ setSearchVal }) {
     const updateText = useCallback(
         (value) => {
             setInputValue(value);
+            if (setSearchVal) {
+                setSearchVal(value);
+            }
 
             if (value === "") {
                 setOptions(deselectedOptions);
@@ -31,10 +34,6 @@ export function AutocompleteExample({ setSearchVal }) {
                 option.label.match(filterRegex)
             );
             setOptions(resultOptions);
-
-            if (setSearchVal) {
-                setSearchVal(value);
-            }
         },
         [deselectedOptions]
     );
@@ -61,6 +60,8 @@ export function AutocompleteExample({ setSearchVal }) {
             prefix={<Icon source={SearchMinor} color="base" />}
             placeholder="Filter by Title"
             autoComplete="off"
+            clearButton
+            onClearButtonClick={() => updateText("")}
         />
     );
 
