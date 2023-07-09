@@ -5,14 +5,14 @@ import {
     FormLayout,
     Button,
 } from "@shopify/polaris";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
 import { checkLogin, loginApiKey } from "../articles";
 
 export async function action({ request, params }) {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     const user = await loginApiKey(data.apiKey);
-    return window.location.reload();
+    return redirect("/loginSuccess");
 }
 
 export default function Index() {
@@ -22,7 +22,7 @@ export default function Index() {
             <LegacyCard sectioned>
                 {user ? (
                     <EmptyState
-                        heading="Correct!"
+                        heading="Start reading!"
                         image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
                     >
                         <p>Please select a blog to see its articles</p>

@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { loader as rootLoader } from "./routes/root";
 import Index, { action as indexAction } from "./routes/index";
 import Article, { loader as articleLoader } from "./routes/article";
+import LoginSuccess from "./routes/loginSuccess";
 
 const router = createBrowserRouter(
     [
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
                     path: "article/:_id",
                     element: <Article />,
                     loader: articleLoader,
+                },
+                {
+                    path: "loginSuccess",
+                    element: <LoginSuccess />,
                 },
             ],
         },
