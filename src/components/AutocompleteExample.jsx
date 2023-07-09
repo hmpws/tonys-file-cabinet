@@ -2,7 +2,7 @@ import { Autocomplete, Icon } from "@shopify/polaris";
 import { SearchMinor } from "@shopify/polaris-icons";
 import { useState, useCallback, useMemo } from "react";
 
-export function AutocompleteExample() {
+export function AutocompleteExample({ setSearchVal }) {
     const deselectedOptions = useMemo(
         () => [
             // { value: "rustic", label: "Rustic" },
@@ -31,6 +31,10 @@ export function AutocompleteExample() {
                 option.label.match(filterRegex)
             );
             setOptions(resultOptions);
+
+            if (setSearchVal) {
+                setSearchVal(value);
+            }
         },
         [deselectedOptions]
     );
@@ -55,7 +59,7 @@ export function AutocompleteExample() {
             onChange={updateText}
             value={inputValue}
             prefix={<Icon source={SearchMinor} color="base" />}
-            placeholder="Search"
+            placeholder="Filter by Title"
             autoComplete="off"
         />
     );

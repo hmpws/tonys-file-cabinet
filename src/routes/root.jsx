@@ -9,6 +9,7 @@ import { Page } from "@shopify/polaris";
 import { AutocompleteExample } from "../components/AutocompleteExample";
 import { Frame, Navigation } from "@shopify/polaris";
 import { getArticles, loginAnonymous } from "../articles";
+import { useEffect, useState } from "react";
 
 export async function loader({ request }) {
     const url = new URL(request.url);
@@ -25,6 +26,20 @@ export default function Root() {
     const { articles } = useLoaderData();
     const [searchParams] = useSearchParams();
     const site = searchParams.get("s");
+
+    const [searchVal, setSearchVal] = useState("");
+
+    const filteredArticles =
+        articles.filter((article) => {
+            let title = null;
+            if (site === "substack") {
+                title = article.article.title;
+            } else if (site === "seekingAlpha") {
+                title = article.article.attributes.title;
+            }
+
+            return title.match(new RegExp(`${searchVal}`, "i"));
+        }) || [];
 
     const getNavlinks = (site, article) => {
         const link = `article/${article._id}?${searchParams.toString()}`;
@@ -52,7 +67,7 @@ export default function Root() {
 
     const navigationComponent = (
         <Navigation location="/">
-            <AutocompleteExample />
+            <AutocompleteExample setSearchVal={setSearchVal} />
             {/* <Navigation.Section
                 items={
                     (articles || []).map((article) => {
@@ -84,7 +99,7 @@ export default function Root() {
                     //]
                 }
             /> */}
-            {(articles || []).map((article) => {
+            {filteredArticles.map((article) => {
                 return (
                     <nav>
                         <li key={article._id}>{getNavlinks(site, article)}</li>
