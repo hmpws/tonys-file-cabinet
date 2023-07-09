@@ -12,6 +12,7 @@
 -   [x] fixed image width
 -   [x] display media
 -   [ ] diplsay comments
--   [ ] styling
--   [ ] display index
+-   [ ] add top bar navigation for mible
 -   [x] scroll to top for articles
+-   [ ] display index
+-   [ ] styling
