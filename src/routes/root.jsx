@@ -5,12 +5,14 @@ import {
     useLoaderData,
     useSearchParams,
     useNavigation,
+    useNavigate,
 } from "react-router-dom";
 import { Page } from "@shopify/polaris";
 import { AutocompleteExample } from "../components/AutocompleteExample";
 import { Frame, Navigation, Loading } from "@shopify/polaris";
 import { getArticles, loginAnonymous } from "../articles";
 import { useEffect, useState } from "react";
+import { HomeMinor, PageMajor } from "@shopify/polaris-icons";
 
 export async function loader({ request }) {
     const url = new URL(request.url);
@@ -27,7 +29,8 @@ export default function Root() {
     const { articles } = useLoaderData();
     const [searchParams] = useSearchParams();
     const site = searchParams.get("s");
-    const navigate = useNavigation();
+    const navigation = useNavigation();
+    const navigate = useNavigate();
 
     const [searchVal, setSearchVal] = useState("");
 
@@ -69,53 +72,68 @@ export default function Root() {
         }
     };
 
+    const getArticleTitle = (site, article) => {
+        let title = null;
+        if (site === "substack") {
+            title = article.article.title;
+        } else if (site === "seekingAlpha") {
+            title = article.article.attributes.title;
+        } else {
+            title = "error";
+        }
+        return title;
+    };
+
+    const getLink = (article) => {
+        const link = `article/${article._id}?${searchParams.toString()}`;
+
+        if (link) {
+            return link;
+        }
+    };
+
     const navigationComponent = (
         <Navigation location="/">
+            <Navigation.Section
+                items={[
+                    {
+                        label: "Home",
+                        onClick: () => navigate("/"),
+                        icon: HomeMinor,
+                    },
+                ]}
+            />
             <AutocompleteExample setSearchVal={setSearchVal} />
-            {/* <Navigation.Section
+            <Navigation.Section
                 items={
-                    (articles || []).map((article) => {
+                    filteredArticles.map((article) => {
                         return {
-                            // url: `article/${article._id}`,
-                            // label: `${article.article.title}`,
-                            // icon: PageMajor,
+                            label: getArticleTitle(site, article),
+                            onClick: () => navigate(getLink(article)),
+                            icon: PageMajor,
                         };
                     })
-                    //[
-                    // {
-                    //     url: "#",
-                    //     label: "Home",
-                    //     icon: PageMajor,
-                    // },
-                    // {
-                    //     url: "#",
-                    //     excludePaths: ["#"],
-                    //     label: "Orders",
-                    //     icon: PageMajor,
-                    //     badge: "15",
-                    // },
-                    // {
-                    //     url: "#",
-                    //     excludePaths: ["#"],
-                    //     label: "Products",
-                    //     icon: PageMajor,
-                    // },
-                    //]
+                    // [
+                    //     {
+                    //         label: "Home",
+                    //         onClick: () => navigate("/loginSuccess"),
+                    //     },
+                    // ]
                 }
-            /> */}
-            {filteredArticles.map((article) => {
+            />
+            {/* {filteredArticles.map((article) => {
                 return (
                     <nav>
                         <li key={article._id}>{getNavlinks(site, article)}</li>
                     </nav>
                 );
-            })}
+            })} */}
         </Navigation>
     );
     return (
         <>
             <Frame navigation={navigationComponent}>
-                {navigate.state === "loading" ? <Loading /> : null}
+                {navigation.state === "loading" ? <Loading /> : null}
                 <Outlet />
             </Frame>
         </>
