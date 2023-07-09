@@ -29,17 +29,16 @@ export default function Root() {
 
     const [searchVal, setSearchVal] = useState("");
 
-    const filteredArticles =
-        articles.filter((article) => {
-            let title = null;
-            if (site === "substack") {
-                title = article.article.title;
-            } else if (site === "seekingAlpha") {
-                title = article.article.attributes.title;
-            }
+    const filteredArticles = (articles || []).filter((article) => {
+        let title = null;
+        if (site === "substack") {
+            title = article.article.title;
+        } else if (site === "seekingAlpha") {
+            title = article.article.attributes.title;
+        }
 
-            return title.match(new RegExp(`${searchVal}`, "i"));
-        }) || [];
+        return title.match(new RegExp(`${searchVal}`, "i"));
+    });
 
     const getNavlinks = (site, article) => {
         const link = `article/${article._id}?${searchParams.toString()}`;

@@ -8,21 +8,24 @@ import Root, { loader as rootLoader } from "./routes/root";
 import Index, { action as indexAction } from "./routes/index";
 import Article, { loader as articleLoader } from "./routes/article";
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Root />,
-        loader: rootLoader,
-        children: [
-            { index: true, element: <Index />, action: indexAction },
-            {
-                path: "article/:_id",
-                element: <Article />,
-                loader: articleLoader,
-            },
-        ],
-    },
-]);
+const router = createBrowserRouter(
+    [
+        {
+            path: "/",
+            element: <Root />,
+            loader: rootLoader,
+            children: [
+                { index: true, element: <Index />, action: indexAction },
+                {
+                    path: "article/:_id",
+                    element: <Article />,
+                    loader: articleLoader,
+                },
+            ],
+        },
+    ],
+    { basename: "/tonys-file-cabinet" }
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
