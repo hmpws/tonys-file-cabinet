@@ -1,24 +1,65 @@
-import { useLoaderData } from "react-router-dom";
-import { getArticle } from "../articles";
+import { useLoaderData, useSearchParams } from "react-router-dom";
+import { checkLogin, getArticle } from "../articles";
 import parse from "html-react-parser";
-import { Card } from "@shopify/polaris";
+import { Card, Page } from "@shopify/polaris";
 
-export async function loader({ params }) {
-    const article = await getArticle(params._id);
+export async function loader({ request, params }) {
+    const url = new URL(request.url);
+    const s = url.searchParams.get("s");
+    const b = url.searchParams.get("b");
+    let article = null;
+    if (s && b) {
+        article = await getArticle(s, b, params._id);
+    }
     return { article };
 }
 
 export default function Article() {
     const { article } = useLoaderData();
-    console.log(parse(article?.article?.body_html));
+    const [searchParams] = useSearchParams();
+    const site = searchParams.get("s");
+
+    const getTitle = (site, article) => {
+        let title = null;
+        if (site === "substack") {
+            title = article.article.title;
+        } else if (site === "seekingAlpha") {
+            title = article.article.attributes.title;
+        }
+        return title;
+    };
+
+    const getSubtitle = (site, article) => {
+        let subTitle = null;
+        if (site === "substack") {
+            subTitle = article.article.subtitle;
+        } else if (site === "seekingAlpha") {
+            const subTitles = article.article.attributes.summary.map((line) => {
+                return <div>- {line}</div>;
+            });
+            subTitle = subTitles.reduce((prev, curr) => [prev, , curr]);
+        }
+        return subTitle;
+    };
+
+    const getBody = (site, article) => {
+        let body = null;
+        if (site === "substack") {
+            body = parse(article?.article?.body_html);
+        } else if (site === "seekingAlpha") {
+            body = parse(article.article.attributes.content);
+        }
+        return body;
+    };
 
     return (
         <>
-            <Card>
-                <div>{parse(article?.article?.title)}</div>
-                <div>{parse(article?.article?.subtitle)}</div>
-                <div>{parse(article?.article?.body_html)}</div>
-            </Card>
+            <Page title={getTitle(site, article)}>
+                <Card>
+                    <div>{getSubtitle(site, article)}</div>
+                    {getBody(site, article)}
+                </Card>
+            </Page>
         </>
     );
 }

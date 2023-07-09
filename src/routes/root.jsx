@@ -1,18 +1,54 @@
-import { Link, NavLink, Outlet, useLoaderData } from "react-router-dom";
+import {
+    Link,
+    NavLink,
+    Outlet,
+    useLoaderData,
+    useSearchParams,
+} from "react-router-dom";
 import { Page } from "@shopify/polaris";
 import { AutocompleteExample } from "../components/AutocompleteExample";
 import { Frame, Navigation } from "@shopify/polaris";
-import { PageMajor } from "@shopify/polaris-icons";
 import { getArticles, loginAnonymous } from "../articles";
 
-export async function loader() {
-    const user = await loginAnonymous();
-    const articles = await getArticles();
+export async function loader({ request }) {
+    const url = new URL(request.url);
+    const s = url.searchParams.get("s");
+    const b = url.searchParams.get("b");
+    let articles = null;
+    if (s && b) {
+        articles = await getArticles(s, b);
+    }
     return { articles };
 }
 
 export default function Root() {
     const { articles } = useLoaderData();
+    const [searchParams] = useSearchParams();
+    const site = searchParams.get("s");
+
+    const getNavlinks = (site, article) => {
+        const link = `article/${article._id}?${searchParams.toString()}`;
+        let title = null;
+        if (site === "substack") {
+            title = article.article.title;
+        } else if (site === "seekingAlpha") {
+            title = article.article.attributes.title;
+        } else {
+            title = "error";
+        }
+        if (link) {
+            return (
+                <NavLink
+                    to={link}
+                    className={({ isActive, isPending }) =>
+                        isActive ? "active" : isPending ? "pending" : ""
+                    }
+                >
+                    <Link to={link}>{title}</Link>
+                </NavLink>
+            );
+        }
+    };
 
     const navigationComponent = (
         <Navigation location="/">
@@ -50,18 +86,9 @@ export default function Root() {
             /> */}
             {(articles || []).map((article) => {
                 return (
-                    <li key={article._id}>
-                        <NavLink
-                            to={`contacts/${article._id}`}
-                            className={({ isActive, isPending }) =>
-                                isActive ? "active" : isPending ? "pending" : ""
-                            }
-                        >
-                            <Link to={`article/${article._id}`}>
-                                {article.article.title}
-                            </Link>
-                        </NavLink>
-                    </li>
+                    <nav>
+                        <li key={article._id}>{getNavlinks(site, article)}</li>
+                    </nav>
                 );
             })}
         </Navigation>
@@ -69,9 +96,7 @@ export default function Root() {
     return (
         <>
             <Frame navigation={navigationComponent}>
-                <Page>
-                    <Outlet />
-                </Page>
+                <Outlet />
             </Frame>
         </>
     );
