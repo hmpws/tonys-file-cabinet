@@ -42,7 +42,6 @@ export const getArticles = async (site, blog) => {
         };
 
         const data = await collection.find({ type: "ARTICLE" }, query);
-        console.log(data);
 
         const datePath =
             site === "substack"
