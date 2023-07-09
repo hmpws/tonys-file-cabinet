@@ -5,8 +5,9 @@
 -   [x] display article
 -   [x] deploy to pages
 -   [x] page title
+-   [ ] clear search box
 -   [ ] loading symbols
 -   [ ] fix login redirect
 -   [ ] sort links by date
--   [ ] diplay comments and media
+-   [ ] display comments and media
 -   [ ] style
