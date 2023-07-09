@@ -29,7 +29,7 @@ export const getArticles = async (site, blog) => {
         const mongo = app.currentUser.mongoClient("mongodb-atlas");
         const collection = mongo.db(site).collection(blog);
 
-        const projection = {
+        const query = {
             projection: {
                 _id: 1,
                 type: 1,
@@ -37,7 +37,7 @@ export const getArticles = async (site, blog) => {
             },
         };
 
-        const data = await collection.find({ type: "ARTICLE" }, projection);
+        const data = await collection.find({ type: "ARTICLE" }, query);
         return data;
     }
 };

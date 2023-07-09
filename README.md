@@ -1,7 +1,12 @@
 -   [x] layout (use react-router-dom as example)
 -   [x] talk to db
--   [ ] search box
+-   [x] search box
 -   [x] table
 -   [x] display article
--   [ ] deploy to pages
--   [ ] page title
+-   [x] deploy to pages
+-   [x] page title
+-   [ ] loading symbols
+-   [ ] fix login redirect
+-   [ ] sort links by date
+-   [ ] diplay comments and media
+-   [ ] style
