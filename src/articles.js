@@ -33,18 +33,35 @@ export const getArticles = async (site, blog) => {
             projection: {
                 _id: 1,
                 type: 1,
-                article: { title: 1, attributes: { title: 1 } },
+                article: {
+                    title: 1,
+                    post_date: 1,
+                    attributes: { title: 1, publishOn: 1 },
+                },
             },
         };
 
         const data = await collection.find({ type: "ARTICLE" }, query);
+        console.log(data);
 
-        const date =
+        const datePath =
             site === "substack"
-                ? "article.article.post_date"
-                : "article.article.attributes.publishOn";
+                ? "article.post_date"
+                : "article.attributes.publishOn";
 
-        data.sort((objA, objB) => Number(objB[date]) - Number(objA[date]));
+        const getValByPath = (data, paths) => {
+            let val = data;
+            for (const path of paths.split(".")) {
+                val = val[path];
+            }
+            return val;
+        };
+
+        data.sort(
+            (objA, objB) =>
+                new Date(getValByPath(objB, datePath)) -
+                new Date(getValByPath(objA, datePath))
+        );
 
         return data;
     }
