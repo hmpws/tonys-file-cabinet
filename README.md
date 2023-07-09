@@ -16,3 +16,4 @@
 -   [x] scroll to top for articles
 -   [ ] display index
 -   [ ] styling
+-   [ ] fix search

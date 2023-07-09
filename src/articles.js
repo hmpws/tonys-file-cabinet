@@ -9,6 +9,7 @@ const app = new Realm.App({ id: "tonys-file-cabinet-ckhzu" });
 export const checkLogin = () => {
     return app.currentUser;
 };
+
 export const loginAnonymous = async () => {
     const user = await app.logIn(Realm.Credentials.anonymous());
     return user;
