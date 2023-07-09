@@ -49,8 +49,17 @@ export default function Article() {
         } else if (site === "seekingAlpha") {
             body = parse(article.article.attributes.content);
         }
-        console.log(body);
         return body;
+    };
+
+    const getMedia = (site, article) => {
+        if (article.media) {
+            const medias = article.media.map((media) => {
+                return <div>{media}</div>;
+            });
+            const media = medias.reduce((prev, curr) => [prev, , curr]);
+            return media;
+        }
     };
 
     return (
@@ -58,6 +67,11 @@ export default function Article() {
             <Page title={getTitle(site, article)}>
                 <VerticalStack gap="4">
                     <Card>{getSubtitle(site, article)}</Card>
+                    <Card>
+                        {article.video || null}
+                        {article.audio || null}
+                        {getMedia(site, article)}
+                    </Card>
                     <Card>
                         <style>
                             {`img {

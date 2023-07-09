@@ -10,6 +10,7 @@
 -   [x] fix login redirect (temporary)
 -   [x] sort links by date
 -   [x] fixed image width
--   [ ] display comments and media
+-   [x] display media
+-   [ ] diplsay comments
 -   [ ] styling
 -   [ ] display index
