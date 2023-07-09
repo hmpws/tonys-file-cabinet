@@ -5,9 +5,9 @@
 -   [x] display article
 -   [x] deploy to pages
 -   [x] page title
--   [ ] clear search box
--   [ ] loading symbols
--   [ ] fix login redirect
--   [ ] sort links by date
+-   [x] clear search box
+-   [x] loading
+-   [x] fix login redirect (temporary)
+-   [x] sort links by date
 -   [ ] display comments and media
--   [ ] style
+-   [ ] styling
