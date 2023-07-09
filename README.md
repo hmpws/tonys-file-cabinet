@@ -14,3 +14,4 @@
 -   [ ] diplsay comments
 -   [ ] styling
 -   [ ] display index
+-   [x] scroll to top for articles

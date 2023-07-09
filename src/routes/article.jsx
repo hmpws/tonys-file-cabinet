@@ -1,7 +1,8 @@
-import { useLoaderData, useSearchParams } from "react-router-dom";
+import { useLoaderData, useSearchParams, useLocation } from "react-router-dom";
 import { checkLogin, getArticle } from "../articles";
 import parse from "html-react-parser";
 import { Card, Page, VerticalStack } from "@shopify/polaris";
+import { useEffect } from "react";
 
 export async function loader({ request, params }) {
     const url = new URL(request.url);
@@ -15,6 +16,18 @@ export async function loader({ request, params }) {
 }
 
 export default function Article() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        const canControlScrollRestoration =
+            "scrollRestoration" in window.history;
+        if (canControlScrollRestoration) {
+            window.history.scrollRestoration = "manual";
+        }
+
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
     const { article } = useLoaderData();
     const [searchParams] = useSearchParams();
     const site = searchParams.get("s");
