@@ -106,9 +106,12 @@ export default function Root() {
             <AutocompleteExample setSearchVal={setSearchVal} />
             <Navigation.Section
                 items={
-                    filteredArticles.map((article) => {
+                    filteredArticles.map((article, index) => {
                         return {
-                            label: getArticleTitle(site, article),
+                            label: `[${index}] ${getArticleTitle(
+                                site,
+                                article
+                            )}`,
                             onClick: () => navigate(getLink(article)),
                             icon: PageMajor,
                         };

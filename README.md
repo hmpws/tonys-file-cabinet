@@ -11,9 +11,9 @@
 -   [x] sort links by date
 -   [x] fixed image width
 -   [x] display media
--   [ ] diplsay comments
+-   [ ] display comments
 -   [ ] add top bar navigation for mible
 -   [x] scroll to top for articles
 -   [ ] display index
 -   [ ] styling
--   [ ] fix search
+-   [x] fix search
