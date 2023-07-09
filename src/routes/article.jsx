@@ -49,6 +49,7 @@ export default function Article() {
         } else if (site === "seekingAlpha") {
             body = parse(article.article.attributes.content);
         }
+        console.log(body);
         return body;
     };
 
@@ -57,7 +58,18 @@ export default function Article() {
             <Page title={getTitle(site, article)}>
                 <VerticalStack gap="4">
                     <Card>{getSubtitle(site, article)}</Card>
-                    <Card>{getBody(site, article)}</Card>
+                    <Card>
+                        <style>
+                            {`img {
+                                max-width: 100%;
+                                height: auto;
+                                display: block;
+                                margin-left: auto;
+                                margin-right: auto;
+                            }`}
+                        </style>
+                        {getBody(site, article)}
+                    </Card>
                 </VerticalStack>
             </Page>
         </>

@@ -9,6 +9,7 @@
 -   [x] loading
 -   [x] fix login redirect (temporary)
 -   [x] sort links by date
+-   [x] fixed image width
 -   [ ] display comments and media
 -   [ ] styling
 -   [ ] display index
