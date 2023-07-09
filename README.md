@@ -11,3 +11,4 @@
 -   [x] sort links by date
 -   [ ] display comments and media
 -   [ ] styling
+-   [ ] display index

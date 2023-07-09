@@ -1,7 +1,7 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
 import { checkLogin, getArticle } from "../articles";
 import parse from "html-react-parser";
-import { Card, Page } from "@shopify/polaris";
+import { Card, Page, VerticalStack } from "@shopify/polaris";
 
 export async function loader({ request, params }) {
     const url = new URL(request.url);
@@ -55,10 +55,10 @@ export default function Article() {
     return (
         <>
             <Page title={getTitle(site, article)}>
-                <Card>
-                    <div>{getSubtitle(site, article)}</div>
-                    {getBody(site, article)}
-                </Card>
+                <VerticalStack gap="4">
+                    <Card>{getSubtitle(site, article)}</Card>
+                    <Card>{getBody(site, article)}</Card>
+                </VerticalStack>
             </Page>
         </>
     );
