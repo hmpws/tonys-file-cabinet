@@ -18,3 +18,4 @@
 -   [ ] styling
 -   [x] fix search
 -   [x] dynamically generating blog links
+-   [ ] replace article links in html
