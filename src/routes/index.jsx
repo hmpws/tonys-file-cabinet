@@ -5,8 +5,17 @@ import {
     FormLayout,
     Button,
 } from "@shopify/polaris";
-import { Form, Link, redirect } from "react-router-dom";
-import { checkLogin, loginApiKey } from "../articles";
+import { Form, Link, redirect, useLoaderData } from "react-router-dom";
+import { checkLogin, getDBCollections, loginApiKey } from "../articles";
+
+export async function loader() {
+    const user = checkLogin();
+    let dbCollections = null;
+    if (user) {
+        dbCollections = await getDBCollections();
+    }
+    return { dbCollections: dbCollections && dbCollections.result };
+}
 
 export async function action({ request, params }) {
     const formData = await request.formData();
@@ -17,6 +26,26 @@ export async function action({ request, params }) {
 
 export default function Index() {
     const user = checkLogin();
+    const { dbCollections } = useLoaderData();
+    const blogs = [];
+    for (const db in dbCollections) {
+        const collections = dbCollections[db];
+        for (const collection of collections) {
+            blogs.push({ s: db, b: collection });
+        }
+    }
+
+    const blogLinks = (blogs) => {
+        const components = blogs.map((blog) => {
+            return (
+                <p>
+                    <Link to={`/?s=${blog.s}&b=${blog.b}`}>{blog.b}</Link>
+                </p>
+            );
+        });
+        return components.reduce((prev, curr) => [prev, , curr]);
+    };
+
     return (
         <Page>
             <LegacyCard sectioned>
@@ -26,17 +55,7 @@ export default function Index() {
                         image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
                     >
                         <p>Please select a blog to see its articles</p>
-                        <Link to={`/?s=substack&b=asiancenturystocks`}>
-                            Asian Century Stocks
-                        </Link>
-                        <div></div>
-                        <Link to={`/?s=substack&b=traderferg`}>
-                            Trader Ferg
-                        </Link>
-                        <div></div>
-                        <Link to={`/?s=seekingAlpha&b=VIE`}>
-                            Value Investor's Edge
-                        </Link>
+                        {blogLinks(blogs)}
                     </EmptyState>
                 ) : (
                     <EmptyState

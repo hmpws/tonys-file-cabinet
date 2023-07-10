@@ -5,7 +5,10 @@ import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { loader as rootLoader } from "./routes/root";
-import Index, { action as indexAction } from "./routes/index";
+import Index, {
+    loader as indexLoader,
+    action as indexAction,
+} from "./routes/index";
 import Article, { loader as articleLoader } from "./routes/article";
 import LoginSuccess from "./routes/loginSuccess";
 
@@ -16,7 +19,12 @@ const router = createBrowserRouter(
             element: <Root />,
             loader: rootLoader,
             children: [
-                { index: true, element: <Index />, action: indexAction },
+                {
+                    index: true,
+                    element: <Index />,
+                    loader: indexLoader,
+                    action: indexAction,
+                },
                 {
                     path: "article/:_id",
                     element: <Article />,

@@ -25,6 +25,11 @@ export const loginApiKey = async (apiKey) => {
     return user;
 };
 
+export const getDBCollections = async () => {
+    const data = await app.currentUser.callFunction("getDBCollections");
+    return data;
+};
+
 export const getArticles = async (site, blog) => {
     if (checkLogin()) {
         const mongo = app.currentUser.mongoClient("mongodb-atlas");
