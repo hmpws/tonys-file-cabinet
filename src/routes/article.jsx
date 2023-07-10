@@ -80,6 +80,7 @@ export default function Article() {
             <Page title={getTitle(site, article)}>
                 <VerticalStack gap="4">
                     <Card>{getSubtitle(site, article)}</Card>
+                    <Card>TODO: Date</Card>
                     <Card>
                         {article.video || null}
                         {article.audio || null}
@@ -97,6 +98,7 @@ export default function Article() {
                         </style>
                         {getBody(site, article)}
                     </Card>
+                    <Card>TODO: Comments</Card>
                 </VerticalStack>
             </Page>
         </>

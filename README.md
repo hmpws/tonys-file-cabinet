@@ -14,8 +14,10 @@
 -   [ ] display comments
 -   [ ] add top bar navigation for moble
 -   [x] scroll to top for articles
--   [ ] display index
+-   [ ] display article index
 -   [ ] styling
 -   [x] fix search
 -   [x] dynamically generating blog links
 -   [ ] replace article links in html
+-   [ ] display article date
+-   [ ] chagne icone based on article premium status

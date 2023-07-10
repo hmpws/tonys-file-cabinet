@@ -99,7 +99,7 @@ export default function Root() {
                     {
                         label: "Home",
                         onClick: () => navigate("/"),
-                        icon: HomeMinor,
+                        icon: HomeMinor, // TODO: use premium status for icon
                     },
                 ]}
             />
