@@ -17,3 +17,4 @@
 -   [ ] display index
 -   [ ] styling
 -   [x] fix search
+-   [ ] move blog link to a private variable

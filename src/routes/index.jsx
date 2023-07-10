@@ -30,6 +30,10 @@ export default function Index() {
                             Asian Century Stocks
                         </Link>
                         <div></div>
+                        <Link to={`/?s=substack&b=traderferg`}>
+                            Trader Ferg
+                        </Link>
+                        <div></div>
                         <Link to={`/?s=seekingAlpha&b=VIE`}>
                             Value Investor's Edge
                         </Link>
