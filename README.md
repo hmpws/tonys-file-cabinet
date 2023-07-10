@@ -12,9 +12,9 @@
 -   [x] fixed image width
 -   [x] display media
 -   [ ] display comments
--   [ ] add top bar navigation for mible
+-   [ ] add top bar navigation for moble
 -   [x] scroll to top for articles
 -   [ ] display index
 -   [ ] styling
 -   [x] fix search
--   [ ] move blog link to a private variable
+-   [x] dynamically generating blog links
