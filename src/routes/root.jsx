@@ -9,9 +9,9 @@ import {
 } from "react-router-dom";
 import { Page } from "@shopify/polaris";
 import { AutocompleteExample } from "../components/AutocompleteExample";
-import { Frame, Navigation, Loading } from "@shopify/polaris";
+import { Frame, Navigation, Loading, TopBar } from "@shopify/polaris";
 import { getArticles, loginAnonymous } from "../articles";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { HomeMinor, PageMajor } from "@shopify/polaris-icons";
 
 export async function loader({ request }) {
@@ -133,9 +133,25 @@ export default function Root() {
             })} */}
         </Navigation>
     );
+
+    const [mobileNavigationActive, setMobileNavigationActive] = useState(false);
+    const toggleMobileNavigationActive = useCallback(
+        () =>
+            setMobileNavigationActive(
+                (mobileNavigationActive) => !mobileNavigationActive
+            ),
+        []
+    );
+    const topBarMarkup = (
+        <TopBar
+            showNavigationToggle
+            onNavigationToggle={toggleMobileNavigationActive}
+        />
+    );
+
     return (
         <>
-            <Frame navigation={navigationComponent}>
+            <Frame topBar={topBarMarkup} navigation={navigationComponent}>
                 {navigation.state === "loading" ? <Loading /> : null}
                 <Outlet />
             </Frame>
