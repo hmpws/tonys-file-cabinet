@@ -21,3 +21,5 @@
 -   [ ] replace article links in html
 -   [ ] display article date
 -   [ ] change icon based on article premium status
+-   [ ] pagination
+-   [ ] hash router to get around client side rendering problem
