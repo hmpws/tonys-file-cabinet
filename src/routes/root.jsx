@@ -154,7 +154,7 @@ export default function Root() {
             <Frame
                 topBar={topBarMarkup}
                 navigation={navigationComponent}
-                showMobileNavigation={mobileNavigationActive}
+                showMobileNavigation={mobileNavigationAsctive}
                 onNavigationDismiss={toggleMobileNavigationActive}
             >
                 {navigation.state === "loading" ? <Loading /> : null}

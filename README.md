@@ -12,7 +12,7 @@
 -   [x] fixed image width
 -   [x] display media
 -   [ ] display comments
--   [ ] add top bar navigation for moble
+-   [x] add top bar navigation for moble
 -   [x] scroll to top for articles (find a better way so this doesn't happen with back button?)
 -   [ ] display article index
 -   [ ] styling
