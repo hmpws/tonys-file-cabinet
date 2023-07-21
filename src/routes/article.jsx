@@ -100,27 +100,29 @@ export default function Article() {
                 );
                 return comment.children;
             };
-            const commentArr = article.comments.comments.map((comment) => {
-                const thread = [];
-                let children = [];
-                let curComment = comment;
-                do {
-                    children = getComment(thread, curComment);
-                    if (children.length > 0) {
-                        curComment = children[0];
-                    } else {
-                        curComment = null;
-                    }
-                } while (curComment);
-                return thread.reduce((prev, curr) => [prev, , curr]);
-            });
+            const commentArr = (article?.comments?.comments || []).map(
+                (comment) => {
+                    const thread = [];
+                    let children = [];
+                    let curComment = comment;
+                    do {
+                        children = getComment(thread, curComment);
+                        if (children.length > 0) {
+                            curComment = children[0];
+                        } else {
+                            curComment = null;
+                        }
+                    } while (curComment);
+                    return thread.reduce((prev, curr) => [prev, , curr]);
+                }
+            );
             comments = commentArr.reduce((prev, curr) => [
                 prev,
                 <Divider />,
                 curr,
             ]);
         } else if (site === "seekingAlpha") {
-            const commentArr = article.comments.map((comment) => {
+            const commentArr = (article.comments || []).map((comment) => {
                 return (
                     <p>
                         <div>{parse(comment.attributes.content)}</div>
