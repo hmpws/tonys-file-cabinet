@@ -61,7 +61,7 @@ export default function Article() {
             const subTitles = article.article.attributes.summary.map((line) => {
                 return <p>{line}</p>;
             });
-            subTitle = subTitles.reduce((prev, curr) => [prev, , curr], null);
+            subTitle = subTitles.reduce((prev, curr) => [prev, , curr]);
         }
         return subTitle;
     };
@@ -81,7 +81,7 @@ export default function Article() {
             const medias = article.media.map((media) => {
                 return <p>{media}</p>;
             });
-            const media = medias.reduce((prev, curr) => [prev, , curr], null);
+            const media = medias.reduce((prev, curr) => [prev, , curr]);
             return media;
         }
     };
@@ -113,13 +113,17 @@ export default function Article() {
                             curComment = null;
                         }
                     } while (curComment);
-                    return thread.reduce((prev, curr) => [prev, , curr], null);
+                    return thread.reduce((prev, curr) => [prev, , curr]);
                 }
             );
-            comments = commentArr.reduce(
-                (prev, curr) => [prev, <Divider />, curr],
-                null
-            );
+            comments =
+                commentArr.length > 0
+                    ? commentArr.reduce((prev, curr) => [
+                          prev,
+                          <Divider />,
+                          curr,
+                      ])
+                    : null;
         } else if (site === "seekingAlpha") {
             const commentArr = (article.comments || []).map((comment) => {
                 return (
@@ -129,7 +133,10 @@ export default function Article() {
                     </p>
                 );
             });
-            comments = commentArr.reduce((prev, curr) => [prev, , curr], null);
+            comments =
+                commentArr.length > 0
+                    ? commentArr.reduce((prev, curr) => [prev, , curr])
+                    : null;
         }
         return comments;
     };
