@@ -103,6 +103,10 @@ export default function Article() {
                             }
                             h3 {
                                 font-size:   16pt;
+                                margin-block-end: 1em;
+                            }
+                            h4 {
+                                font-size:   18pt;
                                 font-weight: bold;
                                 margin-block-end: 1em;
                             }
