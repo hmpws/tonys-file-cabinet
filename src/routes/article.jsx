@@ -1,7 +1,7 @@
 import { useLoaderData, useSearchParams, useLocation } from "react-router-dom";
 import { checkLogin, getArticle } from "../articles";
 import parse from "html-react-parser";
-import { Card, Page, VerticalStack } from "@shopify/polaris";
+import { Card, Divider, Page, VerticalStack } from "@shopify/polaris";
 import { useEffect } from "react";
 
 export async function loader({ request, params }) {
@@ -42,13 +42,24 @@ export default function Article() {
         return title;
     };
 
+    const getDate = (site, article) => {
+        let date = null;
+        if (site === "substack") {
+            date = article.article.post_date;
+        } else if (site === "seekingAlpha") {
+            date = article.article.attributes.publishOn;
+        }
+        return date.split("T")[0];
+    };
+
+    // TODO: move <p></p> to return at the page level?
     const getSubtitle = (site, article) => {
         let subTitle = null;
         if (site === "substack") {
-            subTitle = article.article.subtitle;
+            subTitle = <p>{article.article.subtitle}</p>;
         } else if (site === "seekingAlpha") {
             const subTitles = article.article.attributes.summary.map((line) => {
-                return <div>- {line}</div>;
+                return <p>{line}</p>;
             });
             subTitle = subTitles.reduce((prev, curr) => [prev, , curr]);
         }
@@ -68,27 +79,65 @@ export default function Article() {
     const getMedia = (site, article) => {
         if (article.media) {
             const medias = article.media.map((media) => {
-                return <div>{media}</div>;
+                return <p>{media}</p>;
             });
             const media = medias.reduce((prev, curr) => [prev, , curr]);
             return media;
         }
     };
 
+    const getComments = (site, article) => {
+        let comments = null;
+        if (site === "substack") {
+            const getComment = (thread, comment) => {
+                thread.push(
+                    <p>
+                        <div>{comment.body}</div>
+                        <div>
+                            {comment.name} - {comment.date.split("T")[0]}
+                        </div>
+                    </p>
+                );
+                return comment.children;
+            };
+            const commentArr = article.comments.comments.map((comment) => {
+                const thread = [];
+                let children = [];
+                let curComment = comment;
+                do {
+                    children = getComment(thread, curComment);
+                    if (children.length > 0) {
+                        curComment = children[0];
+                    } else {
+                        curComment = null;
+                    }
+                } while (curComment);
+                return thread.reduce((prev, curr) => [prev, , curr]);
+            });
+            comments = commentArr.reduce((prev, curr) => [
+                prev,
+                <Divider />,
+                curr,
+            ]);
+        } else if (site === "seekingAlpha") {
+            const commentArr = article.comments.map((comment) => {
+                return (
+                    <p>
+                        <div>{parse(comment.attributes.content)}</div>
+                        <div>{comment.attributes.createdOn.split("T")[0]}</div>
+                    </p>
+                );
+            });
+            comments = commentArr.reduce((prev, curr) => [prev, , curr]);
+        }
+        return comments;
+    };
+
     return (
         <>
             <Page title={getTitle(site, article)} narrowWidth>
-                <VerticalStack gap="4">
-                    <Card>{getSubtitle(site, article)}</Card>
-                    <Card>TODO: Date</Card>
-                    <Card>
-                        {article.video || null}
-                        {article.audio || null}
-                        {getMedia(site, article)}
-                    </Card>
-                    <Card>
-                        <style>
-                            {`
+                <style>
+                    {`
                             img {
                                 max-width: 100%;
                                 height: auto;
@@ -101,20 +150,34 @@ export default function Article() {
                                 line-height: 150%;
                                 margin-block-end: 1em;
                             }
+                            h2 {
+                                font-size:   14pt;
+                                margin-block-end: 1em;
+                            }
                             h3 {
                                 font-size:   16pt;
                                 margin-block-end: 1em;
                             }
                             h4 {
                                 font-size:   18pt;
-                                font-weight: bold;
                                 margin-block-end: 1em;
                             }
                             `}
-                        </style>
-                        {getBody(site, article)}
-                    </Card>
-                    <Card>TODO: Comments</Card>
+                </style>
+                <VerticalStack gap="4">
+                    <h2>{getDate(site, article)}</h2>
+                    <Card>{getSubtitle(site, article)}</Card>
+                    {article.video ||
+                    article.audio ||
+                    getMedia(site, article) ? (
+                        <Card>
+                            <p>{article.video || null}</p>
+                            <p>{article.audio || null}</p>
+                            {getMedia(site, article)}
+                        </Card>
+                    ) : null}
+                    <Card>{getBody(site, article)}</Card>
+                    <Card>{getComments(site, article)}</Card>
                 </VerticalStack>
             </Page>
         </>

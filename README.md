@@ -11,15 +11,15 @@
 -   [x] sort links by date
 -   [x] fixed image width
 -   [x] display media
--   [ ] display comments
+-   [x] display comments
 -   [x] add top bar navigation for moble
 -   [x] scroll to top for articles (find a better way so this doesn't happen with back button?)
 -   [ ] display article index
--   [ ] styling
+-   [x] styling
 -   [x] fix search
 -   [x] dynamically generating blog links
 -   [ ] replace article links in html
--   [ ] display article date
+-   [x] display article date
 -   [ ] change icon based on article premium status
 -   [ ] pagination
 -   [x] hash router to get around client side rendering problem
