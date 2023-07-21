@@ -22,4 +22,6 @@
 -   [ ] display article date
 -   [ ] change icon based on article premium status
 -   [ ] pagination
--   [ ] hash router to get around client side rendering problem
+-   [x] hash router to get around client side rendering problem
+-   [ ] move search to topbar
+-   [ ] better "home" navigation section (test "url" instead of link with hashrouter)
