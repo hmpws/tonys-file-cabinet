@@ -77,7 +77,7 @@ export default function Article() {
 
     return (
         <>
-            <Page title={getTitle(site, article)}>
+            <Page title={getTitle(site, article)} narrowWidth>
                 <VerticalStack gap="4">
                     <Card>{getSubtitle(site, article)}</Card>
                     <Card>TODO: Date</Card>
@@ -88,13 +88,25 @@ export default function Article() {
                     </Card>
                     <Card>
                         <style>
-                            {`img {
+                            {`
+                            img {
                                 max-width: 100%;
                                 height: auto;
                                 display: block;
                                 margin-left: auto;
                                 margin-right: auto;
-                            }`}
+                            }
+                            p {
+                                font-size:   12pt;
+                                line-height: 150%;
+                                margin-block-end: 1em;
+                            }
+                            h3 {
+                                font-size:   16pt;
+                                font-weight: bold;
+                                margin-block-end: 1em;
+                            }
+                            `}
                         </style>
                         {getBody(site, article)}
                     </Card>
