@@ -112,7 +112,7 @@ export default function Article() {
                         } else {
                             curComment = null;
                         }
-                    } while (curComment);
+                    } while (curComment); // NB: ahhh, you can do recursion in javascript
                     return thread.reduce((prev, curr) => [prev, , curr]);
                 }
             );
@@ -143,7 +143,7 @@ export default function Article() {
 
     return (
         <>
-            <Page title={getTitle(site, article)} narrowWidth>
+            <Page title={getTitle(site, article)}>
                 <style>
                     {`
                             img {
