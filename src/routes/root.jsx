@@ -6,6 +6,7 @@ import {
     useSearchParams,
     useNavigation,
     useNavigate,
+    ScrollRestoration,
 } from "react-router-dom";
 import { Page } from "@shopify/polaris";
 import { AutocompleteExample } from "../components/AutocompleteExample";
@@ -158,6 +159,7 @@ export default function Root() {
                 onNavigationDismiss={toggleMobileNavigationActive}
             >
                 {navigation.state === "loading" ? <Loading /> : null}
+                <ScrollRestoration />
                 <Outlet />
             </Frame>
         </>
