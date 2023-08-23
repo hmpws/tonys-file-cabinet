@@ -89,7 +89,7 @@ export default function Article() {
     const getComments = (site, article) => {
         let comments = null;
         if (site === "substack") {
-            const getComment = (thread, comment) => {
+            const getCommentHtml = (thread, comment) => {
                 thread.push(
                     <p>
                         <div>{comment.body}</div>
@@ -100,19 +100,41 @@ export default function Article() {
                 );
                 return comment.children;
             };
+
+            function flattenComments(commentObj) {
+                const result = [];
+
+                function flattenRecursive(comment) {
+                    result.push(comment);
+                    comment.children.forEach((child) => {
+                        flattenRecursive(child);
+                    });
+                }
+
+                flattenRecursive(commentObj);
+                return result;
+            }
+
             const commentArr = (article?.comments?.comments || []).map(
                 (comment) => {
                     const thread = [];
-                    let children = [];
-                    let curComment = comment;
-                    do {
-                        children = getComment(thread, curComment);
-                        if (children.length > 0) {
-                            curComment = children[0];
-                        } else {
-                            curComment = null;
-                        }
-                    } while (curComment); // NB: ahhh, you can do recursion in javascript
+                    const flattenedComments = flattenComments(comment);
+                    flattenedComments.forEach((comment) => {
+                        return getCommentHtml(thread, comment);
+                    });
+
+                    // let children = [];
+                    // let curComment = comment;
+                    // do {
+                    //     children = getComment(thread, curComment);
+                    //     const child = children.shift();
+                    //     if (children.length > 0) {
+                    //         curComment = child;
+                    //     } else {
+                    //         curComment = null;
+                    //     }
+                    // } while (curComment); // NB: ahhh, you can do recursion in javascript
+
                     return thread.reduce((prev, curr) => [prev, , curr]);
                 }
             );
