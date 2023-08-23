@@ -122,19 +122,6 @@ export default function Article() {
                     flattenedComments.forEach((comment) => {
                         return getCommentHtml(thread, comment);
                     });
-
-                    // let children = [];
-                    // let curComment = comment;
-                    // do {
-                    //     children = getComment(thread, curComment);
-                    //     const child = children.shift();
-                    //     if (children.length > 0) {
-                    //         curComment = child;
-                    //     } else {
-                    //         curComment = null;
-                    //     }
-                    // } while (curComment); // NB: ahhh, you can do recursion in javascript
-
                     return thread.reduce((prev, curr) => [prev, , curr]);
                 }
             );
