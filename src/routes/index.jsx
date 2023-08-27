@@ -37,9 +37,15 @@ export default function Index() {
 
     const blogLinks = (blogs) => {
         const components = blogs.map((blog) => {
+            const blogMeta = blog.b.split("[");
+            blogMeta[1] = blogMeta[1].replace("]", "");
             return (
                 <p>
-                    <Link to={`/?s=${blog.s}&b=${blog.b}`}>{blog.b}</Link>
+                    <Link to={`/?s=${blog.s}&b=${blogMeta[0]}`}>
+                        {`${blogMeta[0]} (${new Date(
+                            blogMeta[1]
+                        ).toDateString()})`}
+                    </Link>
                 </p>
             );
         });
