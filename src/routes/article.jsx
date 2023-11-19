@@ -31,6 +31,7 @@ export default function Article() {
     const { article } = useLoaderData();
     const [searchParams] = useSearchParams();
     const site = searchParams.get("s");
+    const blog = searchParams.get("b");
 
     const getTitle = (site, article) => {
         let title = null;
@@ -149,6 +150,14 @@ export default function Article() {
         }
         return comments;
     };
+
+    const location = useLocation();
+    useEffect(() => {
+        document.title = `[${blog}] ${getDate(site, article)} - ${getTitle(
+            site,
+            article
+        )}`;
+    }, [location]);
 
     return (
         <>

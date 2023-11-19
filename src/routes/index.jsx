@@ -7,6 +7,7 @@ import {
 } from "@shopify/polaris";
 import { Form, Link, redirect, useLoaderData } from "react-router-dom";
 import { checkLogin, getDBCollections, loginApiKey } from "../articles";
+import { useEffect } from "react";
 
 export async function loader() {
     const user = checkLogin();
@@ -51,6 +52,10 @@ export default function Index() {
         });
         return components.reduce((prev, curr) => [prev, , curr]);
     };
+
+    useEffect(() => {
+        document.title = "Index";
+    }, []);
 
     return (
         <Page>
