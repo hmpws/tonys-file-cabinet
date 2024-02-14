@@ -3,7 +3,11 @@ import ReactDOM from "react-dom/client";
 import "@shopify/polaris/build/esm/styles.css";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider } from "@shopify/polaris";
-import { RouterProvider, createHashRouter } from "react-router-dom";
+import {
+    RouterProvider,
+    createBrowserRouter,
+    createHashRouter,
+} from "react-router-dom";
 import Root, { loader as rootLoader } from "./routes/root";
 import Index, {
     loader as indexLoader,
@@ -12,7 +16,7 @@ import Index, {
 import Article, { loader as articleLoader } from "./routes/article";
 import LoginSuccess from "./routes/loginSuccess";
 
-const router = createHashRouter(
+const router = createBrowserRouter(
     [
         {
             path: "/",
@@ -36,8 +40,8 @@ const router = createHashRouter(
                 },
             ],
         },
-    ]
-    // { basename: "/tonys-file-cabinet" }
+    ],
+    { basename: "/tonys-file-cabinet" }
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
