@@ -10,7 +10,11 @@ export async function loader({ request, params }) {
     const b = url.searchParams.get("b");
     let article = null;
     if (s && b) {
-        article = await getArticle(s, b, params._id);
+        article = await getArticle(
+            s,
+            b,
+            s === "substack" ? parseInt(params.id) : params.id
+        );
     }
     return { article };
 }

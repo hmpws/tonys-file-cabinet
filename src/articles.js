@@ -42,6 +42,7 @@ export const getArticles = async (site, blog) => {
                 article: {
                     title: 1,
                     post_date: 1,
+                    id: 1,
                     attributes: { title: 1, publishOn: 1 },
                 },
             },
@@ -78,7 +79,7 @@ export const getArticle = async (site, blog, id) => {
         const collection = mongo.db(site).collection(blog);
 
         const data = await collection.findOne({
-            _id: ObjectId(id),
+            "article.id": id,
         });
         return data;
     }

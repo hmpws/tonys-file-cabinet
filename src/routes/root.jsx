@@ -49,30 +49,6 @@ export default function Root() {
         );
     });
 
-    const getNavlinks = (site, article) => {
-        const link = `article/${article._id}?${searchParams.toString()}`;
-        let title = null;
-        if (site === "substack") {
-            title = article.article.title;
-        } else if (site === "seekingAlpha") {
-            title = article.article.attributes.title;
-        } else {
-            title = "error";
-        }
-        if (link) {
-            return (
-                <NavLink
-                    to={link}
-                    className={({ isActive, isPending }) =>
-                        isActive ? "active" : isPending ? "pending" : ""
-                    }
-                >
-                    <Link to={link}>{title}</Link>
-                </NavLink>
-            );
-        }
-    };
-
     const getArticleTitle = (site, article) => {
         let title = null;
         if (site === "substack") {
@@ -86,7 +62,7 @@ export default function Root() {
     };
 
     const getLink = (article) => {
-        const link = `article/${article._id}?${searchParams.toString()}`;
+        const link = `article/${article.article.id}?${searchParams.toString()}`;
 
         if (link) {
             return link;
